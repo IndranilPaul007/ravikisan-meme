@@ -91,7 +91,7 @@ const MemeText = () => {
 
 export default function App() {
   const [isPlayingGucci, setIsPlayingGucci] = useState(true);
-  const [isShaking, setIsShaking] = useState(false); // New state to control the 3-second earthquake
+  const [isShaking, setIsShaking] = useState(false); 
   const [activeModal, setActiveModal] = useState(null); 
   const [resumeGucciOnClose, setResumeGucciOnClose] = useState(false); 
   
@@ -99,7 +99,6 @@ export default function App() {
   const gucciAudioRef = useRef(null);
   const bouncingMemeRef = useRef(null); 
 
-  // 1. Audio/Video Autoplay Setup
   useEffect(() => {
     gucciAudioRef.current = new Audio('/gucci-riyaz.mp3');
     gucciAudioRef.current.loop = true;
@@ -124,35 +123,29 @@ export default function App() {
     };
   }, []);
 
-  // 2. The 3-Second Earthquake Timer
   useEffect(() => {
     let shakeTimeout;
     if (isPlayingGucci) {
       setIsShaking(true);
-      // Stop the shaking after 3 seconds
       shakeTimeout = setTimeout(() => {
         setIsShaking(false);
       }, 3000);
     } else {
       setIsShaking(false);
     }
-
     return () => clearTimeout(shakeTimeout);
   }, [isPlayingGucci]);
 
-  // 3. Global Vine Boom Clicker
   useEffect(() => {
     const playBoom = () => {
       const boom = new Audio('/boom.mp3');
       boom.volume = 0.5; 
       boom.play().catch(e => console.log("Boom blocked", e));
     };
-    
     window.addEventListener('click', playBoom);
     return () => window.removeEventListener('click', playBoom);
   }, []);
 
-  // 4. Bouncing Logic for Meme 4
   useEffect(() => {
     let x = 100;
     let y = 100;
@@ -218,12 +211,11 @@ export default function App() {
   };
 
   return (
-    // Only applies the earthquake class for the 3 seconds determined by the state
     <div className={isShaking ? 'earthquake' : ''} style={{ width: '100vw', height: '100vh', backgroundColor: '#000', position: 'relative', overflow: 'hidden' }}>
       
       {/* Chaotic 2000s Website UI Overlay */}
       <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', zIndex: 10, pointerEvents: 'none', display: activeModal ? 'none' : 'block' }}>
-        <marquee scrollamount="25" style={{ color: 'lime', fontSize: '2.5rem', fontFamily: 'Impact', textShadow: '3px 3px red' }}>
+        <marquee scrollamount="15" style={{ color: 'lime', fontSize: 'clamp(1.5rem, 5vw, 2.5rem)', fontFamily: 'Impact', textShadow: '2px 2px red' }}>
           🔥🔥 Ravi ki Puttar presents: MONEY FOLLOWS MY BROTHER 🔥🔥 ZINDAGI JHANDWA 🔥🔥 
         </marquee>
       </div>
@@ -236,25 +228,26 @@ export default function App() {
         style={{
           position: 'absolute',
           zIndex: 5,
-          width: '150px',
-          border: '5px dashed yellow',
-          boxShadow: '10px 10px 0px red',
+          width: 'min(20vw, 150px)', // Fluid sizing
+          border: '3px dashed yellow',
+          boxShadow: '5px 5px 0px red',
           display: activeModal ? 'none' : 'block' 
         }}
       />
 
-      {/* FIXED Gucci Dance Video Player (Bottom Left) */}
+      {/* RESPONSIVE Gucci Dance Video Player (Bottom Left) */}
       <div 
         style={{ 
           position: 'absolute', 
-          bottom: '30px',
-          left: '30px',
+          bottom: '15px',
+          left: '10px',
           zIndex: 20,
-          border: '5px solid hotpink',
-          borderRadius: '15px',
+          border: '3px solid hotpink',
+          borderRadius: '10px',
           overflow: 'hidden',
-          boxShadow: '10px 10px 0px cyan',
+          boxShadow: '5px 5px 0px cyan',
           backgroundColor: '#000',
+          width: 'min(38vw, 250px)', // Shrinks on mobile
           display: activeModal ? 'none' : 'block'
         }}>
         <video 
@@ -263,50 +256,50 @@ export default function App() {
           loop 
           muted 
           playsInline
-          style={{ width: '250px', display: 'block' }} 
+          style={{ width: '100%', display: 'block' }} 
         />
         <button 
           onClick={toggleGucci}
           style={{
             width: '100%',
-            padding: '10px',
-            fontSize: '1.2rem',
+            padding: 'clamp(5px, 2vw, 10px)',
+            fontSize: 'clamp(0.8rem, 2.5vw, 1.2rem)', // Scalable text
             fontFamily: 'Comic Sans MS, Comic Sans, cursive',
             backgroundColor: isPlayingGucci ? 'red' : 'yellow',
             color: isPlayingGucci ? 'white' : 'blue',
             border: 'none',
-            borderTop: '5px dashed hotpink',
+            borderTop: '3px dashed hotpink',
             cursor: 'pointer',
             transition: 'all 0.1s'
           }}
         >
-          {isPlayingGucci ? '🛑 STOP DANCE' : '▶️ RESUME DANCE'}
+          {isPlayingGucci ? '🛑 STOP' : '▶️ PLAY'}
         </button>
       </div>
 
-      {/* Video Popup Button (For Money Follows) */}
+      {/* RESPONSIVE Video Popup Button (For Money Follows) */}
       <div style={{ 
         position: 'absolute', 
-        bottom: '30px', 
-        right: '30px', 
+        bottom: '15px', 
+        right: '10px', 
         zIndex: 20,
         display: activeModal ? 'none' : 'block' 
       }}>
         <button 
           onClick={(e) => openModal('money', e)}
           style={{
-            padding: '20px 40px',
-            fontSize: '1.8rem',
+            padding: 'clamp(10px, 3vw, 20px) clamp(15px, 4vw, 40px)',
+            fontSize: 'clamp(1rem, 3.5vw, 1.8rem)', // Scalable text
             fontFamily: 'Comic Sans MS, Comic Sans, cursive',
             backgroundColor: 'chartreuse',
             color: 'black',
-            border: '5px double orange',
-            boxShadow: '-10px 10px 0px magenta',
+            border: '4px double orange',
+            boxShadow: '-5px 5px 0px magenta',
             cursor: 'pointer',
             transition: 'all 0.1s'
           }}
         >
-          📺 WATCH THE MONEY
+          📺 WATCH
         </button>
       </div>
 
@@ -324,20 +317,21 @@ export default function App() {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
+          padding: '10px'
         }}>
           
           <button 
             onClick={closeModal}
             style={{
               position: 'absolute',
-              top: '20px',
-              right: '30px',
-              padding: '10px 20px',
-              fontSize: '2rem',
+              top: '15px',
+              right: '15px',
+              padding: 'clamp(5px, 2vw, 10px) clamp(10px, 3vw, 20px)',
+              fontSize: 'clamp(1.2rem, 4vw, 2rem)',
               fontWeight: 'bold',
               backgroundColor: 'red',
               color: 'white',
-              border: '4px solid white',
+              border: '3px solid white',
               fontFamily: 'Impact',
               cursor: 'pointer',
               zIndex: 1000
@@ -346,19 +340,25 @@ export default function App() {
             X CLOSE
           </button>
 
-          <div style={{ border: '10px dashed lime', boxShadow: '0 0 50px lime', backgroundColor: 'black' }}>
+          <div style={{ 
+            border: '5px dashed lime', 
+            boxShadow: '0 0 30px lime', 
+            backgroundColor: 'black',
+            width: 'min(90vw, 600px)', // Constrains the modal width
+            aspectRatio: activeModal === 'money' ? 'auto' : '9/16' // Fixes youtube iframe aspect ratio
+          }}>
             {activeModal === 'money' ? (
               <video 
                 src="/money-follows.mp4" 
                 autoPlay 
                 controls 
                 loop
-                style={{ maxHeight: '70vh', maxWidth: '90vw', display: 'block' }}
+                style={{ width: '100%', maxHeight: '70vh', display: 'block' }}
               />
             ) : (
               <iframe 
-                width="315" 
-                height="560" 
+                width="100%" 
+                height="100%" 
                 src={
                   activeModal === 'sutti' ? "https://www.youtube.com/embed/fVE5I2Z0iAg?autoplay=1&loop=1&playlist=fVE5I2Z0iAg" : 
                   activeModal === 'mid' ? "https://www.youtube.com/embed/n-_C9MVLLSk?autoplay=1&loop=1&playlist=n-_C9MVLLSk" :
@@ -368,12 +368,19 @@ export default function App() {
                 frameBorder="0" 
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                 allowFullScreen
-                style={{ maxHeight: '70vh', maxWidth: '90vw', display: 'block' }}
+                style={{ display: 'block' }}
               ></iframe>
             )}
           </div>
           
-          <h1 style={{ color: 'magenta', fontFamily: 'Comic Sans MS', marginTop: '20px', textShadow: '2px 2px white', textAlign: 'center' }}>
+          <h1 style={{ 
+            color: 'magenta', 
+            fontFamily: 'Comic Sans MS', 
+            marginTop: '20px', 
+            textShadow: '2px 2px white', 
+            textAlign: 'center',
+            fontSize: 'clamp(1.5rem, 5vw, 2.5rem)'
+          }}>
             {activeModal === 'money' ? 'MONEY MULTIPLYING...' : 
              activeModal === 'sutti' ? 'GHAR JAKE SUTTI BABU! 🛌' : 
              activeModal === 'mid' ? 'ABSOLUTE CINEMA! 🎥' :
@@ -395,13 +402,28 @@ export default function App() {
 
           <React.Suspense fallback={
             <Html center>
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px', minWidth: '80vw' }}>
-                <div style={{ display: 'flex', flexDirection: 'row', gap: '15px', justifyContent: 'center', flexWrap: 'wrap' }}>
-                  <img src="/ravi-meme-1.jpg" alt="Meme 1" onClick={(e) => openModal('left', e)} style={{ width: '200px', cursor: 'pointer', border: '5px dashed magenta' }} />
-                  <img src="/ravi-meme-2.jpg" alt="Meme 2" onClick={(e) => openModal('mid', e)} style={{ width: '200px', cursor: 'pointer', border: '5px dashed cyan' }} />
-                  <img src="/ravi-meme-3.jpg" alt="Meme 3" onClick={(e) => openModal('sutti', e)} style={{ width: '200px', cursor: 'pointer', border: '5px dashed lime' }} />
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '15px', width: '100vw', padding: '0 20px' }}>
+                <div style={{ 
+                  display: 'flex', 
+                  flexDirection: 'row', 
+                  gap: '10px', 
+                  justifyContent: 'center', 
+                  alignItems: 'center',
+                  flexWrap: 'nowrap' // Prevents them from breaking onto new lines on small screens
+                }}>
+                  {/* Fluid widths to keep them aligned side-by-side on mobile */}
+                  <img src="/ravi-meme-1.jpg" alt="Meme 1" onClick={(e) => openModal('left', e)} style={{ width: 'min(28vw, 200px)', cursor: 'pointer', border: '3px dashed magenta' }} />
+                  <img src="/ravi-meme-2.jpg" alt="Meme 2" onClick={(e) => openModal('mid', e)} style={{ width: 'min(28vw, 200px)', cursor: 'pointer', border: '3px dashed cyan' }} />
+                  <img src="/ravi-meme-3.jpg" alt="Meme 3" onClick={(e) => openModal('sutti', e)} style={{ width: 'min(28vw, 200px)', cursor: 'pointer', border: '3px dashed lime' }} />
                 </div>
-                <h2 style={{ color: 'lime', fontFamily: 'Comic Sans MS', textShadow: '2px 2px red', marginTop: '10px', whiteSpace: 'nowrap' }}>
+                <h2 style={{ 
+                  color: 'lime', 
+                  fontFamily: 'Comic Sans MS', 
+                  textShadow: '2px 2px red', 
+                  marginTop: '5px', 
+                  whiteSpace: 'nowrap',
+                  fontSize: 'clamp(1.2rem, 4vw, 2rem)' // Scalable text to prevent cutoff
+                }}>
                   LOADING CHAOS... (CLICK A MEME)
                 </h2>
               </div>
