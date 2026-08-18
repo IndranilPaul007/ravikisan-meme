@@ -235,11 +235,11 @@ export default function App() {
         }}
       />
 
-      {/* RESPONSIVE Gucci Dance Video Player (Bottom Left) */}
+      {/* SHIFTED UP: Gucci Dance Video Player (Bottom Left) */}
       <div 
         style={{ 
           position: 'absolute', 
-          bottom: '15px',
+          bottom: '90px', // Shifted significantly higher up from the bottom edge
           left: '10px',
           zIndex: 20,
           border: '3px solid hotpink',
@@ -255,7 +255,7 @@ export default function App() {
           src="/gucci-dance.mp4" 
           loop 
           muted 
-          playsInline /* Crucial for iOS visibility */
+          playsInline 
           style={{ width: '100%', height: 'auto', display: 'block' }} 
         />
         <button 
@@ -277,10 +277,10 @@ export default function App() {
         </button>
       </div>
 
-      {/* RESPONSIVE Video Popup Button (For Money Follows) */}
+      {/* SHIFTED UP: Video Popup Button (For Money Follows) */}
       <div style={{ 
         position: 'absolute', 
-        bottom: '15px', 
+        bottom: '90px', // Shifted significantly higher up matching the left side
         right: '10px', 
         zIndex: 20,
         display: activeModal ? 'none' : 'block' 
@@ -312,7 +312,7 @@ export default function App() {
           width: '100vw',
           height: '100vh',
           backgroundColor: 'rgba(0, 0, 0, 0.95)',
-          zIndex: 9999, // Max z-index to punch through everything
+          zIndex: 9999, 
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
@@ -340,14 +340,13 @@ export default function App() {
             X CLOSE
           </button>
 
-          {/* FIXED MODAL WRAPPER FOR MOBILE */}
           <div style={{ 
             border: '5px dashed lime', 
             boxShadow: '0 0 30px lime', 
             backgroundColor: 'black',
             width: '90vw', 
             maxWidth: '450px', 
-            height: activeModal === 'money' ? 'auto' : '70vh', // Explicit height fallback!
+            height: activeModal === 'money' ? 'auto' : '70vh', 
             maxHeight: '800px',
             position: 'relative',
             display: 'flex',
