@@ -1,0 +1,38 @@
+* {
+  box-sizing: border-box;
+}
+
+body, html, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: black;
+  /* THE CUSTOM CURSOR */
+  cursor: url('/ravi-meme-4.jpg') 16 16, auto !important;
+}
+
+/* Force cursor on all clickable elements too */
+button, img, video {
+  cursor: url('/ravi-meme-4.jpg') 16 16, pointer !important;
+}
+
+/* THE EARTHQUAKE DEEP FRY ANIMATION */
+@keyframes deepFryShake {
+  0% { transform: translate(2px, 1px) rotate(0deg); filter: saturate(200%) contrast(150%); }
+  10% { transform: translate(-1px, -2px) rotate(-1deg); filter: saturate(250%) contrast(180%) hue-rotate(10deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); filter: saturate(200%) contrast(150%); }
+  30% { transform: translate(3px, 2px) rotate(0deg); filter: saturate(300%) contrast(200%) hue-rotate(-10deg); }
+  40% { transform: translate(1px, -1px) rotate(1deg); filter: saturate(200%) contrast(150%); }
+  50% { transform: translate(-1px, 2px) rotate(-1deg); filter: saturate(250%) contrast(180%); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); filter: saturate(200%) contrast(150%); }
+  70% { transform: translate(3px, 1px) rotate(-1deg); filter: saturate(300%) contrast(200%) hue-rotate(15deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); filter: saturate(200%) contrast(150%); }
+  90% { transform: translate(1px, 2px) rotate(0deg); filter: saturate(250%) contrast(180%); }
+  100% { transform: translate(1px, -2px) rotate(-1deg); filter: saturate(200%) contrast(150%); }
+}
+
+.earthquake {
+  animation: deepFryShake 0.2s infinite;
+}
