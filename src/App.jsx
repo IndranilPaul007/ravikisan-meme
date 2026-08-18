@@ -228,7 +228,7 @@ export default function App() {
         style={{
           position: 'absolute',
           zIndex: 5,
-          width: 'min(20vw, 150px)', // Fluid sizing
+          width: 'min(20vw, 150px)',
           border: '3px dashed yellow',
           boxShadow: '5px 5px 0px red',
           display: activeModal ? 'none' : 'block' 
@@ -247,7 +247,7 @@ export default function App() {
           overflow: 'hidden',
           boxShadow: '5px 5px 0px cyan',
           backgroundColor: '#000',
-          width: 'min(38vw, 250px)', // Shrinks on mobile
+          width: 'min(38vw, 250px)', 
           display: activeModal ? 'none' : 'block'
         }}>
         <video 
@@ -255,15 +255,15 @@ export default function App() {
           src="/gucci-dance.mp4" 
           loop 
           muted 
-          playsInline
-          style={{ width: '100%', display: 'block' }} 
+          playsInline /* Crucial for iOS visibility */
+          style={{ width: '100%', height: 'auto', display: 'block' }} 
         />
         <button 
           onClick={toggleGucci}
           style={{
             width: '100%',
             padding: 'clamp(5px, 2vw, 10px)',
-            fontSize: 'clamp(0.8rem, 2.5vw, 1.2rem)', // Scalable text
+            fontSize: 'clamp(0.8rem, 2.5vw, 1.2rem)',
             fontFamily: 'Comic Sans MS, Comic Sans, cursive',
             backgroundColor: isPlayingGucci ? 'red' : 'yellow',
             color: isPlayingGucci ? 'white' : 'blue',
@@ -289,7 +289,7 @@ export default function App() {
           onClick={(e) => openModal('money', e)}
           style={{
             padding: 'clamp(10px, 3vw, 20px) clamp(15px, 4vw, 40px)',
-            fontSize: 'clamp(1rem, 3.5vw, 1.8rem)', // Scalable text
+            fontSize: 'clamp(1rem, 3.5vw, 1.8rem)', 
             fontFamily: 'Comic Sans MS, Comic Sans, cursive',
             backgroundColor: 'chartreuse',
             color: 'black',
@@ -312,7 +312,7 @@ export default function App() {
           width: '100vw',
           height: '100vh',
           backgroundColor: 'rgba(0, 0, 0, 0.95)',
-          zIndex: 999,
+          zIndex: 9999, // Max z-index to punch through everything
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
@@ -334,18 +334,25 @@ export default function App() {
               border: '3px solid white',
               fontFamily: 'Impact',
               cursor: 'pointer',
-              zIndex: 1000
+              zIndex: 10000
             }}
           >
             X CLOSE
           </button>
 
+          {/* FIXED MODAL WRAPPER FOR MOBILE */}
           <div style={{ 
             border: '5px dashed lime', 
             boxShadow: '0 0 30px lime', 
             backgroundColor: 'black',
-            width: 'min(90vw, 600px)', // Constrains the modal width
-            aspectRatio: activeModal === 'money' ? 'auto' : '9/16' // Fixes youtube iframe aspect ratio
+            width: '90vw', 
+            maxWidth: '450px', 
+            height: activeModal === 'money' ? 'auto' : '70vh', // Explicit height fallback!
+            maxHeight: '800px',
+            position: 'relative',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'
           }}>
             {activeModal === 'money' ? (
               <video 
@@ -353,7 +360,8 @@ export default function App() {
                 autoPlay 
                 controls 
                 loop
-                style={{ width: '100%', maxHeight: '70vh', display: 'block' }}
+                playsInline
+                style={{ width: '100%', height: 'auto', maxHeight: '65vh', display: 'block' }}
               />
             ) : (
               <iframe 
@@ -368,7 +376,7 @@ export default function App() {
                 frameBorder="0" 
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                 allowFullScreen
-                style={{ display: 'block' }}
+                style={{ position: 'absolute', top: 0, left: 0, border: 'none' }}
               ></iframe>
             )}
           </div>
@@ -409,9 +417,8 @@ export default function App() {
                   gap: '10px', 
                   justifyContent: 'center', 
                   alignItems: 'center',
-                  flexWrap: 'nowrap' // Prevents them from breaking onto new lines on small screens
+                  flexWrap: 'nowrap'
                 }}>
-                  {/* Fluid widths to keep them aligned side-by-side on mobile */}
                   <img src="/ravi-meme-1.jpg" alt="Meme 1" onClick={(e) => openModal('left', e)} style={{ width: 'min(28vw, 200px)', cursor: 'pointer', border: '3px dashed magenta' }} />
                   <img src="/ravi-meme-2.jpg" alt="Meme 2" onClick={(e) => openModal('mid', e)} style={{ width: 'min(28vw, 200px)', cursor: 'pointer', border: '3px dashed cyan' }} />
                   <img src="/ravi-meme-3.jpg" alt="Meme 3" onClick={(e) => openModal('sutti', e)} style={{ width: 'min(28vw, 200px)', cursor: 'pointer', border: '3px dashed lime' }} />
@@ -422,7 +429,7 @@ export default function App() {
                   textShadow: '2px 2px red', 
                   marginTop: '5px', 
                   whiteSpace: 'nowrap',
-                  fontSize: 'clamp(1.2rem, 4vw, 2rem)' // Scalable text to prevent cutoff
+                  fontSize: 'clamp(1.2rem, 4vw, 2rem)'
                 }}>
                   LOADING CHAOS... (CLICK A MEME)
                 </h2>
